@@ -1,0 +1,103 @@
+
+1) What are the manifests or "Kind" required to host a web app in Kubernetes? Can you give few exampels in YAML format?
+
+kind: ConfigMap
+kind: Deployment
+kind: Service
+kind: Secret
+kind: Ingress
+Kind: Pod
+Kind:Namespace
+
+kind: ConfigMap 
+================
+
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: example-configmap 
+data:
+  # Configuration values can be set as key-value properties
+  database: mongodb
+  database_uri: mongodb://localhost:27017
+  
+  # Or set as complete file contents (even JSON!)
+  keys: | 
+    image.public.key=771 
+    rsa.public.key=42
+
+kind: Service
+=============
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp3-svc
+  labels:
+    app: webapp3
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: webapp3
+	
+
+kind: Secret
+============
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-sa-sample
+  annotations:
+    kubernetes.io/service-account.name: "sa-name"
+type: kubernetes.io/service-account-token
+data:
+  # You can include additional key value pairs as you do with Opaque Secrets
+  extra: YmFyCg==
+  
+  
+
+Kind:Namespace
+==============
+  kind: Namespace
+apiVersion: v1
+metadata:
+  name: test
+  labels:
+    name: test
+
+kind: Deployment
+================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+		
+		
+Kind:Pod
+========
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-pod
+spec:
+  containers:
+  - image: chkrishna/springdemoapp:latest
+    name: spring-demoapp
+    ports:
+    - containerPort: 8080
+      protocol: TCP
