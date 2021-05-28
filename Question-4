@@ -1,5 +1,12 @@
 4) Write a Shell script to sort the give any array using bubble-sort, How do you make a variable immutable in shells scripting? give an example.
 
+You can create the constants variables using the readonly command or declare command.
+The readonly buitin syntax is as follows:
+readonly var
+readonly varName=value
+
+when u try to change varName=someothervalues it says "-bash: varName: readonly variable"
+
 Enter Tip #
 echo "input several number:"
  The value of the input # -a read in to the array array
