@@ -1,0 +1,28 @@
+7) Can you write a Ansible playbook to delete all the files in /tmp directory which are older than 3 days. and list the results number of files cleaned and size saved, and the list of files couldn't delete due to lock.
+---
+- hosts: all
+  tasks:
+    - name: find all files that are older than 3 days
+      find:
+        paths: /tmp
+        age: 3d
+        recurse: yes
+      register: filesOlderThan3
+    - name: remove older than 3
+      file:
+        path: "{{ item.path }}" 
+        state: absent
+      with_items: "{{ filesOlderThan3.files }}"
+      
+      - debug:
+      msg: "{{ filesOlderThan3.files }}"
+      
+      vars:
+  lock_file_path=/tmp/*.lock
+
+pre_tasks: 
+   - stat: path={{lock_file_path}}
+     register: lock_file
+
+   - fail: msg="Sorry, I found a lockfile, so I'm assuming that someone was already running ansible when you started this deploy job. Add -f to your deploy command to forcefully continue deploying, if the previous deploy was aborted."
+   when: lock_file.stat.exists|bool and not force_ignore_lock|bool
