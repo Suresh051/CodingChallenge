@@ -1,0 +1,12 @@
+2) How to block a port in linux. write down the steps.
+
+iptables -A INPUT -p tcp --destination-port [port number] -j DROP
+
+For example:
+
+To block port 21 (to block FTP), use the command below:
+
+# iptables -A INPUT -p tcp --destination-port 21 -j DROP
+Save the iptables for rules to be persistent across reboots.
+
+# service iptables save
