@@ -1,0 +1,23 @@
+4) Write a Shell script to sort the give any array using bubble-sort, How do you make a variable immutable in shells scripting? give an example.
+
+Enter Tip #
+echo "input several number:"
+ The value of the input # -a read in to the array array
+read -a array
+ The length of the array # separate out efficiency can be improved using the variable let -1, $ {# array [*]} acquired length of the array
+let length=${#array[*]}-1
+ # Double bubble sort cycle, $ length acquired value of length
+for((i=0;i<$length;i++)){
+  for((j=0;j<$length-i;j++)){
+         # Spaces between [and variables here, and no less, otherwise it will error
+    if [ ${array[j]} -gt ${array[j+1]} ];then
+             # Exchange data
+      temp=${array[j]}
+      array[j]=${array[j+1]}
+      array[j+1]=$temp
+         #fi represents the end if the
+    fi
+  }
+}
+ After the sorted array output #, $ {array [*]} for all elements of the output array
+echo "after sort:${array[*]}"
